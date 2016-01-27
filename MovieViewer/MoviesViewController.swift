@@ -52,6 +52,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     
     
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
     
     
     
@@ -92,6 +96,29 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         print("row \(indexPath.row)")
         return cell
+    }
+    
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        let myRequest = NSURLRequest()
+        
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate: nil,
+            delegateQueue: NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(myRequest, completionHandler: {(data, response, error) in
+            
+            
+            
+            self.tableView.reloadData()
+            
+            refreshControl.endRefreshing()
+        
+        });
+        task.resume()
     }
     
 
