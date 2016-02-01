@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		689467F51C5FDCBE0038D93E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689467F41C5FDCBE0038D93E /* DetailViewController.swift */; };
 		68D68FFB1C57FD3800F0E132 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D68FFA1C57FD3800F0E132 /* AppDelegate.swift */; };
 		68D690001C57FD3800F0E132 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68D68FFE1C57FD3800F0E132 /* Main.storyboard */; };
 		68D690021C57FD3800F0E132 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68D690011C57FD3800F0E132 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		583A8E17C6DB44041DAA21D2 /* Pods-MovieViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-MovieViewer/Pods-MovieViewer.release.xcconfig"; sourceTree = "<group>"; };
+		689467F41C5FDCBE0038D93E /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		68D68FF71C57FD3800F0E132 /* MovieViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68D68FFA1C57FD3800F0E132 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68D68FFF1C57FD3800F0E132 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				68D6900C1C57FDA400F0E132 /* MoviesViewController.swift */,
+				689467F41C5FDCBE0038D93E /* DetailViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				68D68FFB1C57FD3800F0E132 /* AppDelegate.swift in Sources */,
 				68D6900D1C57FDA400F0E132 /* MoviesViewController.swift in Sources */,
 				68D690101C581D0300F0E132 /* MovieCell.swift in Sources */,
+				689467F51C5FDCBE0038D93E /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
