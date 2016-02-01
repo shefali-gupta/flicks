@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AFNetworking
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -21,7 +23,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
 
         // Do any additional setup after loading the view.
-    
+        //var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     
     
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
@@ -42,7 +44,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            print("response: \(responseDictionary)")
+                            //print("response: \(responseDictionary)")
                             
                             self.movies = responseDictionary["results"] as! [NSDictionary]
                             self.tableView.reloadData()
@@ -52,10 +54,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     
     
+        let progressHUD = loadDataFromNetwork()
+        
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        
         tableView.insertSubview(refreshControl, atIndex: 0)
+        
     
     
     
@@ -87,16 +93,42 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        
-        
-        
-        
-        
+        cell.posterView.setImageWithURL(imageURL!)
 
         
         print("row \(indexPath.row)")
         return cell
     }
+    
+    
+    
+    func loadDataFromNetwork() {
+        
+        // ... Create the NSURLRequest (myRequest) ...
+        let myRequest2 = NSURLRequest()
+        
+        // Configure session so that completion handler is executed on main UI thread
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        // Display HUD right before the request is made
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(myRequest2,
+            completionHandler: { (data, response, error) in
+                
+                // Hide HUD once the network request comes back (must be done on main UI thread)
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
+                
+                // ... Remainder of response handling code ...
+                
+        });
+        task.resume()
+    }
+    
     
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
