@@ -27,8 +27,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. If there is a different or better way to implement the progress 
-2. 
+1. If there is a different or better way to implement the progress HUD/loading state.
+2. Modifying pull-to-refresh to work when the user pulls the screen upwards upon reaching the bottom of the table.
 
 ## Video Walkthrough 
 
