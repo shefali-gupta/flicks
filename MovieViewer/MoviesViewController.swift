@@ -24,9 +24,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
 
         // Do any additional setup after loading the view.
-        //var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-    
-    
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
@@ -57,15 +54,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     
         let progressHUD = loadDataFromNetwork()
-        
-        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
         
         tableView.insertSubview(refreshControl, atIndex: 0)
-        
-    
-    
     
     }
 
@@ -86,23 +78,42 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
         let movie = movies![indexPath.row]
+        
         let title = movie["title"] as! String
-        
-        
         cell.titleLabel.text = title
         
         let overview = movie["overview"] as! String
         cell.overviewLabel.text = overview
         
-        let baseURL = "http://image.tmdb.org/t/p/w500"
-        
         if let posterPath = movie["poster_path"] as? String {
-            let imageURL = NSURL(string: baseURL + posterPath)
-            cell.posterView.setImageWithURL(imageURL!)
+            let baseURL = "http://image.tmdb.org/t/p/w500"
+            let imageRequest = NSURLRequest(URL: NSURL(string: baseURL + posterPath)!)
+            
+            cell.posterView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        print("Image was NOT cached, fade in image")
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = image
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            cell.posterView.alpha = 1.0
+                        })
+                    } else {
+                        print("Image was cached so just update the image")
+                        cell.posterView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    // do something for the failure condition
+            })
+            
+            
         }
-
         
-        //print("row \(indexPath.row)")
         return cell
     }
     
@@ -149,10 +160,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(myRequest, completionHandler: {(data, response, error) in
             
-            
-            
             self.tableView.reloadData()
-            
             refreshControl.endRefreshing()
         
         });
