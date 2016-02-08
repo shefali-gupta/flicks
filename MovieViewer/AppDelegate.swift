@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let topRatedNavigationController = storyboard.instantiateViewControllerWithIdentifier("MoviesNavigationController") as! UINavigationController
         let topRatedViewController = topRatedNavigationController.topViewController as! MoviesViewController
         topRatedViewController.endpoint = "top_rated"
-        topRatedNavigationController.tabBarItem.title = "TOP RATED"
+        topRatedNavigationController.tabBarItem.title = "Top Rated"
         topRatedNavigationController.navigationBar.barStyle = UIBarStyle.Black
         topRatedNavigationController.tabBarItem.image = UIImage(named: "top_rated")
         
