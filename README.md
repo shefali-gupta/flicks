@@ -85,8 +85,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. If there is a way to auto-resize the info view according to the title and overview labels' sizes. 
+2. How to move the tab bar up to right under the navigation bar.
 
 ## Video Walkthrough 
 
