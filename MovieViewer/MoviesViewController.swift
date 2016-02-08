@@ -23,6 +23,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.delegate = self
 
+
         // Do any additional setup after loading the view.
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
@@ -58,7 +59,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
         
         tableView.insertSubview(refreshControl, atIndex: 0)
+    }
     
+    override func viewDidAppear(animated: Bool) {
+        let indexPath = tableView.indexPathForSelectedRow
+        if (indexPath != nil) {
+            tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        }
+        
+        //don't hide navigation bar on tap
+        navigationController?.hidesBarsOnTap = false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,15 +84,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             return 0;
         }
     }
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
-        let movie = movies![indexPath.row]
+        cell.selectionStyle = .Default
+        cell.accessoryType = .None
         
+        let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         cell.titleLabel.text = title
-        
         let overview = movie["overview"] as! String
         cell.overviewLabel.text = overview
         
@@ -180,6 +193,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.movie = movie
+        detailViewController.hidesBottomBarWhenPushed = true
         
         
         print("prepare for segue")

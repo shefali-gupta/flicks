@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var releaseDateLabel: UILabel!
    
     var movie: NSDictionary!
 
@@ -26,13 +27,41 @@ class DetailViewController: UIViewController {
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
         
         let title = movie["title"] as? String
-        titleLabel.text = title
+        //titleLabel.text = title
+        
+        // setting the title to movie title
+        self.navigationItem.title = title
         
         let overview = movie["overview"] as? String
         overviewLabel.text = overview
         overviewLabel.sizeToFit()
         
-        let baseURL = "http://image.tmdb.org/t/p/w500"
+        let releaseDate = movie["release_date"] as? String
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let date = dateFormatter.dateFromString(releaseDate!)
+        dateFormatter.dateStyle = .MediumStyle
+        print("date: \(date)")
+        let formattedDate = dateFormatter.stringFromDate(date!)
+        print("formatted date: \(formattedDate)")
+        releaseDateLabel.text = formattedDate
+        
+        
+        //customize navigation bar
+        
+        navigationController?.hidesBarsOnTap = true
+        
+        // making the bar transparent
+        /*
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.view.backgroundColor = UIColor.clearColor()
+        */
+        
+        
+        //let baseURL = "http://image.tmdb.org/t/p/w500"
         let smallImageURL = "https://image.tmdb.org/t/p/w45"
         let largeImageURL = "https://image.tmdb.org/t/p/original"
         
